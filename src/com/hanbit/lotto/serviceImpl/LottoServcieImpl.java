@@ -1,4 +1,4 @@
-package com.hanbit.serviceImpl;
+package com.hanbit.lotto.serviceImpl;
 
 import com.hanbit.lotto.domain.LottoBean;
 import com.hanbit.lotto.service.LottoService;

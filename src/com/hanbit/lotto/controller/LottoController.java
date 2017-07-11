@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import com.hanbit.lotto.domain.LottoBean;
 import com.hanbit.lotto.service.LottoService;
-import com.hanbit.serviceImpl.LottoServcieImpl;
+import com.hanbit.lotto.serviceImpl.LottoServcieImpl;
 
 public class LottoController {
 	public static void main(String[] args) {
