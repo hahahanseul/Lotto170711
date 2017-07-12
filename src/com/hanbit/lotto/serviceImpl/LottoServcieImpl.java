@@ -8,20 +8,9 @@ public class LottoServcieImpl implements LottoService{
 	int[] lotto;  //돈과 상관없이 생성되는 한 줄(숫자6) 로또
 	private int count; //돈에 따른 줄 5를 넘을 수 없고 
 	//로또는 1~45사이의 숫자
-	public LottoServcieImpl() {
-		count =0;
-		lotto = new int[6];
-	}
-	
 	@Override
 	public void setCount(LottoBean bean) {
-		int x = bean.getMoney()/1000;
-		if(x>=5) {
-			x=5;
-		}else {
-			 x = bean.getMoney()/1000;
-		}
-		this.count=x;
+		this.count=(bean.getMoney()/1000>=5)?5:bean.getMoney()/1000;
 	}
 	@Override
 	public int getCount() {
@@ -33,23 +22,18 @@ public class LottoServcieImpl implements LottoService{
 		// 로또 만들기
 		setCount(bean);
 		lottos = new int[count][6];
-		int i = 0;
 		for(count=0;count<lottos.length;count++) {
-			while(true) {
-				int num=bean.getNumber();
-				if(isDuplication(count, num)) {
-					continue;
+			for(int i=0;i<6;i++) {
+				int num = bean.getNumber();
+				if(!isDuplication(count, num)) {
+					lottos[count][i]=num;
+				}else {
+					i--;
 				}
-				lottos[count][i] = num;
-				i++;
-				if(i==lottos[count].length) {
-					sort(lottos[count]);
-					i=0;
-					break;
-				}
+				
 			}
+			sort(lottos[count]);
 		}
-
 	}
 	@Override
 	public int[][] getLottos() {
@@ -59,13 +43,13 @@ public class LottoServcieImpl implements LottoService{
 
 	@Override
 	public boolean isDuplication(int count, int num) {
-		boolean result = false;
-		for(int i=0;i<lottos[count].length;i++) {
-			if(lottos[count][i]==num) {
-				result=true;
+		boolean flag = false;
+		for(int i=0;i<6;i++) {
+			if(num == lottos[count][i]) {
+				flag = true;
 			}
 		}
-		return result;
+		return flag;
 	}
 
 	@Override
@@ -73,11 +57,11 @@ public class LottoServcieImpl implements LottoService{
 		// 오름차순으로 정렬 swap정렬
 		int temp =0;
 		for(int i=0;i<arr.length-1;i++) {
-			for(int j=i+1;j<arr.length;j++) {
-				if(arr[i]>arr[j]) {
-					temp = arr[i];
-					arr[i]=arr[j];
-					arr[j]=temp;
+			for(int j=0;j<arr.length-i-1;j++) {
+				if(arr[j]>arr[j+1]) {
+					temp = arr[j];
+					arr[j]=arr[j+1];
+					arr[j+1]=temp;
 				}
 			}
 		}

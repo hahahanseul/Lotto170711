@@ -1,6 +1,9 @@
 package com.hanbit.lotto.domain;
 
-public class LottoBean {
+import java.io.Serializable;
+
+public class LottoBean implements Serializable{
+	private static final long serialVersionUID = -203192648266155124L;
 	private int number, money;
 
 	public int getNumber() {
